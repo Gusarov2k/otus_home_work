@@ -18,10 +18,13 @@ func check_string(name string) string {
 
 	fullLen := len(name)
 	countDigitsInWord := 0
+	countBackslash := 0
 
 	for _, val := range name {
 		if unicode.IsDigit(val) {
 			countDigitsInWord++
+		} else if val == 92 {
+			countBackslash++
 		}
 	}
 	if fullLen == countDigitsInWord {
@@ -47,6 +50,6 @@ func check_string(name string) string {
 }
 
 func main() {
-	fmt.Println(check_string("a4bc2d5e"))
+	// fmt.Println(check_string("a4bc2d5e"))
 	fmt.Println(check_string(`qwe\45`))
 }
