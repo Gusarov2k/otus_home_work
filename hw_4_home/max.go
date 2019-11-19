@@ -1,23 +1,37 @@
-// Написать функцию находящую максимальный элемент в слайсе
-// с произвольными элементами ([]interface{}) с использованием
-// пользовательской функции-компаратора.
+// Написать функцию, которая получает на вход текст и возвращает 10 самых часто встречающихся слов без учета словоформ
 package main
 
-import ("fmt"
-"strings")
+import (
+	"fmt"
+	// "sort"
+	"strings"
+)
 
-func maxElement(element ...[]string){
-	for _,val := range element {
-		strings.Split(val, " ")
-		fmt.Println(len(val))
+func unique(element string) []string {
+	intSlice := strings.Split(element, " ")
+	keys := make(map[string]int)
+	list := []string{}
+	for _, entry := range intSlice {
+		if _, value := keys[entry]; !value {
+			keys[entry] = 0
+			list = append(list, entry)
+		}
 	}
-	fmt.Println(element)
+
+	for key := range keys {
+		for _, v := range intSlice {
+			if key == v {
+				keys[key] += 1
+			}
+		}
+	}
+
+	fmt.Println(keys)
+	return list
 }
 
-func main(){
-	// fmt.Println("Hell")
-	test := []string{"dsf dsfs dfsf sf dfs dfsd dfdsf", "dsfdsf"}
+func main() {
+	test := "man man dsfs dfsf sf dfs dfsd man dfdsf"
 
-	maxElement(test)
-
+	fmt.Println(unique(test))
 }
