@@ -3,35 +3,46 @@ package main
 
 import (
 	"fmt"
-	// "sort"
+	"sort"
 	"strings"
 )
 
-func unique(element string) []string {
-	intSlice := strings.Split(element, " ")
+type kv struct {
+	Key   string
+	Value int
+}
+
+func unique(element string) []kv {
+	stringArr := strings.Split(element, " ")
 	keys := make(map[string]int)
-	list := []string{}
-	for _, entry := range intSlice {
+
+	for _, entry := range stringArr {
 		if _, value := keys[entry]; !value {
 			keys[entry] = 0
-			list = append(list, entry)
 		}
 	}
 
 	for key := range keys {
-		for _, v := range intSlice {
+		for _, v := range stringArr {
 			if key == v {
 				keys[key] += 1
 			}
 		}
 	}
 
-	fmt.Println(keys)
-	return list
+	var ss []kv
+	for k, v := range keys {
+		ss = append(ss, kv{k, v})
+	}
+
+	sort.Slice(ss, func(i, j int) bool {
+		return ss[i].Value > ss[j].Value
+	})
+	return ss
 }
 
 func main() {
-	test := "man man dsfs dfsf sf dfs dfsd man dfdsf"
+	test := "man man dsfs dfsf sf dfs dfsd man dfdsf d d d d"
 
 	fmt.Println(unique(test))
 }
